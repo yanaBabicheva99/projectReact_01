@@ -3,6 +3,11 @@ import api from '../api';
 
 const Users = () => {
    const [users, setUsers] = useState(api.users.fetchAll());
+   const [header, setHeader] = useState(['Имя', 'Качества', 'Профессия', 'Встретился, раз', 'Оценка', ' '])
+
+    const createHeader = () => {
+       return  header.map(element => <th scope="col" key={element}>{element}</th>)
+    }
 
    const getBadgeClasses = () => {
        let classes = 'badge ';
@@ -25,7 +30,7 @@ const Users = () => {
     const renderPhrase = (number) => {
         return (
             number === 0? 'Никто с тобой не тусанет': number > 4 || number === 1 ? `${number} человек тусанет с тобой сегодня`:
-                `${number} человека тусанет с тобой сегодня`
+                `${number} человека тусанут с тобой сегодня`
         );
     }
 
@@ -57,19 +62,14 @@ const Users = () => {
 
     return(
         <>
-           <h2>
-               <span className={getBadgeClasses()}>{renderPhrase(users.length)}</span>
-           </h2>
+            <h2>
+                <span className={getBadgeClasses()}>{renderPhrase(users.length)}</span>
+            </h2>
 
             <table className="table m-2">
                 <thead>
                 <tr>
-                    <th scope="col">Имя</th>
-                    <th scope="col">Качества</th>
-                    <th scope="col">Профессия</th>
-                    <th scope="col">Встретился, раз</th>
-                    <th scope="col">Оценка</th>
-                    <th scope="col"> </th>
+                    {createHeader()}
                 </tr>
                 </thead>
                 <tbody>
